@@ -153,6 +153,7 @@ class BaseRobotEnv(GoalEnv):
 
     def reset(
         self,
+        goal: Optional[np.ndarray] = None,
         *,
         seed: Optional[int] = None,
         options: Optional[dict] = None,
@@ -178,7 +179,10 @@ class BaseRobotEnv(GoalEnv):
         did_reset_sim = False
         while not did_reset_sim:
             did_reset_sim = self._reset_sim()
-        self.goal = self._sample_goal().copy()
+        if goal is not None:
+            self.goal = goal.copy()
+        else:
+            self.goal = self._sample_goal().copy()
         obs = self._get_obs()
         if self.render_mode == "human":
             self.render()

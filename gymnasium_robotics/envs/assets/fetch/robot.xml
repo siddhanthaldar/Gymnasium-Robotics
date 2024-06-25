@@ -1,4 +1,6 @@
 <mujoco>
+	<camera pos="1.34 0.75 1.25" name="topview" />
+	
 	<body mocap="true" name="robot0:mocap" pos="0 0 0">
 		<geom conaffinity="0" contype="0" pos="0 0 0" rgba="0 0.5 0 0.7" size="0.005 0.005 0.005" type="box"></geom>
 		<geom conaffinity="0" contype="0" pos="0 0 0" rgba="0 0.5 0 0.1" size="1 0.005 0.005" type="box"></geom>
@@ -118,6 +120,9 @@
 		</body>
 		<body name="robot0:external_camera_body_0" pos="0 0 0">
 			<camera euler="0 0.75 1.57" fovy="43.3" name="external_camera_0" pos="1.3 0 1.2"></camera>
+		</body>
+		<body name="robot0:frontview" pos="0 0 0">
+			<camera euler="0 1.57 1.57" fovy="43.3" name="frontview" pos="1.3 0 0.55"></camera>
 		</body>
 	</body>
 </mujoco>

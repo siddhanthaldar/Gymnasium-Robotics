@@ -253,10 +253,14 @@ class MujocoPyFetchEnv(get_base_fetch_env(MujocoPyRobotEnv)):
 
         # Randomize start position of object.
         if self.has_object:
-            object_xpos = self.initial_gripper_xpos[:2]
-            while np.linalg.norm(object_xpos - self.initial_gripper_xpos[:2]) < 0.1:
-                object_xpos = self.initial_gripper_xpos[:2] + self.np_random.uniform(
-                    -self.obj_range, self.obj_range, size=2
+            object_xpos = self.initial_gripper_xpos[:2].copy()
+            # while np.linalg.norm(object_xpos - self.initial_gripper_xpos[:2]) < 0.1:
+            #     # object_xpos = self.initial_gripper_xpos[:2] + self.np_random.uniform(
+            #     #     -self.obj_range, self.obj_range, size=2
+            #     # )
+            while np.linalg.norm(object_xpos[1:2] - self.initial_gripper_xpos[1:2]) < 0.05:
+                object_xpos[1:2] = self.initial_gripper_xpos[1:2] + self.np_random.uniform(
+                    -self.obj_range, self.obj_range, size=1
                 )
             object_qpos = self.sim.data.get_joint_qpos("object0:joint")
             assert object_qpos.shape == (7,)

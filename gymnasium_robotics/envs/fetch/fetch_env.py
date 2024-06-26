@@ -258,10 +258,16 @@ class MujocoPyFetchEnv(get_base_fetch_env(MujocoPyRobotEnv)):
             #     # object_xpos = self.initial_gripper_xpos[:2] + self.np_random.uniform(
             #     #     -self.obj_range, self.obj_range, size=2
             #     # )
-            while np.linalg.norm(object_xpos[1:2] - self.initial_gripper_xpos[1:2]) < 0.05:
-                object_xpos[1:2] = self.initial_gripper_xpos[1:2] + self.np_random.uniform(
-                    -self.obj_range, self.obj_range, size=1
-                )
+            # while np.linalg.norm(object_xpos[1:2] - self.initial_gripper_xpos[1:2]) < 0.05:
+            #     object_xpos[1:2] = self.initial_gripper_xpos[1:2] + self.np_random.uniform(
+            #         -self.obj_range, self.obj_range, size=1
+            #     )
+            sign = np.random.choice([-1, 1])
+            dist_threshold = 0.1
+            delta = self.obj_range - dist_threshold
+            delta = self.np_random.uniform(0, delta, size=1)
+            object_xpos[1] = self.initial_gripper_xpos[1:2] + sign * (dist_threshold + delta)
+            
             object_qpos = self.sim.data.get_joint_qpos("object0:joint")
             assert object_qpos.shape == (7,)
             object_qpos[:2] = object_xpos
